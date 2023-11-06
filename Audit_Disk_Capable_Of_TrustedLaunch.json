@@ -1,0 +1,73 @@
+{
+    "properties": {
+      "displayName": "Audit_Disk_Capable_Of_TrustedLaunch",
+      "policyType": "Custom",
+      "mode": "All",
+      "description": "Check if disk is capable of Trusted Launch on supported VM",
+      "metadata": {
+        "category": "Trusted Launch",
+        "createdBy": "bfb91404-d966-46e7-8c63-3a7d24d07abe",
+        "createdOn": "2023-11-06T00:54:55.8898778Z",
+        "updatedBy": "bfb91404-d966-46e7-8c63-3a7d24d07abe",
+        "updatedOn": "2023-11-06T05:00:21.0929683Z"
+      },
+      "parameters": {
+        "effect": {
+          "type": "String",
+          "metadata": {
+            "displayName": "Effect",
+            "description": "Enable or disable the execution of the policy"
+          },
+          "allowedValues": [
+            "Audit",
+            "Disabled"
+          ],
+          "defaultValue": "Audit"
+        }
+      },
+      "policyRule": {
+        "if": {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Compute/disks"
+            },
+            {
+              "allOf": [
+                {
+                  "field": "Microsoft.Compute/disks/osType",
+                  "exists": "true"
+                },
+                {
+                  "anyOf": [
+                    {
+                      "field": "Microsoft.Compute/disks/hyperVGeneration",
+                      "exists": "false"
+                    },
+                    {
+                      "field": "Microsoft.Compute/disks/hyperVGeneration",
+                      "Equals": "V1"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "then": {
+          "effect": "[parameters('effect')]"
+        }
+      }
+    },
+    "id": "/subscriptions/fc9bb6ad-e94f-44bb-a427-edbf7aea4c78/providers/Microsoft.Authorization/policyDefinitions/caa117e1-6daf-4d88-98f9-4b8f6530cc07",
+    "type": "Microsoft.Authorization/policyDefinitions",
+    "name": "caa117e1-6daf-4d88-98f9-4b8f6530cc07",
+    "systemData": {
+      "createdBy": "admin@MngEnvMCAP885824.onmicrosoft.com",
+      "createdByType": "User",
+      "createdAt": "2023-11-06T00:54:55.8688893Z",
+      "lastModifiedBy": "admin@MngEnvMCAP885824.onmicrosoft.com",
+      "lastModifiedByType": "User",
+      "lastModifiedAt": "2023-11-06T05:00:21.0751343Z"
+    }
+  }
