@@ -1,16 +1,14 @@
 {
     "properties": {
-      "displayName": "Audit_Disk_Capable_Of_TrustedLaunch",
+      "displayName": "Disks and OS image should support TrustedLaunch",
       "policyType": "Custom",
       "mode": "All",
-      "description": "Check if disk is capable of Trusted Launch on supported VM",
+      "description": "TrustedLaunch improves security of a Virtual Machine and this requires Disks & OS Image which support it (Gen 2). To learn more about TrustedLaunch, visit https://learn.microsoft.com/en-us/azure/virtual-machines/trusted-launch",
       "metadata": {
-        "category": "Trusted Launch",
-        "createdBy": "bfb91404-d966-46e7-8c63-3a7d24d07abe",
-        "createdOn": "2023-11-06T00:54:55.8898778Z",
-        "updatedBy": "bfb91404-d966-46e7-8c63-3a7d24d07abe",
-        "updatedOn": "2023-11-06T05:00:21.0929683Z"
-      },
+        "version":"1.0.0",
+        "category": "Trusted Launch"
+       },
+       "version":"1.0.0",
       "parameters": {
         "effect": {
           "type": "String",

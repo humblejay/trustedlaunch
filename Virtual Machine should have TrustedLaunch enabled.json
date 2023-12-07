@@ -1,0 +1,71 @@
+{
+  "properties": {
+    "displayName": "Virtual Machine should have TrustedLaunch enabled",
+    "policyType": "BuiltIn",
+    "mode": "All",
+    "description": "Enable TrustedLaunch on Virtual Machine for security, use TrustedLaunch supported VM SKU (Gen 2). To learn more about TrustedLaunch, visit https://learn.microsoft.com/en-us/azure/virtual-machines/trusted-launch",
+    "metadata": {
+      "version": "1.0.0",
+      "category": "Trusted Launch"
+    },
+    "version": "1.0.0",
+    "parameters": {
+      "effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy"
+        },
+        "allowedValues": ["Audit", "Disabled"],
+        "defaultValue": "Audit"
+      }
+    },
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "in": [
+              "Microsoft.Compute/virtualMachines",
+              "Microsoft.Compute/virtualMachineScaleSets"
+            ]
+          },
+          {
+            "anyOf": [
+              {
+                "field": "Microsoft.Compute/virtualMachines/securityProfile",
+                "exists": "false"
+              },
+              {
+                "field": "Microsoft.Compute/virtualMachines/securityProfile.securityType",
+                "notEquals": "TrustedLaunch"
+              },
+              {
+                "field": "Microsoft.Compute/virtualMachines/securityProfile.uefiSettings.secureBootEnabled",
+                "notEquals": "true"
+              },
+              {
+                "field": "Microsoft.Compute/virtualMachines/securityProfile.uefiSettings.vTpmEnabled",
+                "notEquals": "true"
+              }
+            ]
+          }
+        ]
+      },
+      "then": {
+        "effect": "[parameters('effect')]"
+      }
+    }
+  },
+  "id": "/subscriptions/fc9bb6ad-e94f-44bb-a427-edbf7aea4c78/providers/Microsoft.Authorization/policyDefinitions/caa117e1-6daf-4d88-98f9-4b8f6530cc1a",
+  "type": "Microsoft.Authorization/policyDefinitions",
+  "name": "caa117e1-6daf-4d88-98f9-4b8f6530cc1a",
+  "systemData": {
+    "createdBy": "admin@MngEnvMCAP885824.onmicrosoft.com",
+    "createdByType": "User",
+    "createdAt": "2023-11-06T00:56:29.0104962Z",
+    "lastModifiedBy": "admin@MngEnvMCAP885824.onmicrosoft.com",
+    "lastModifiedByType": "User",
+    "lastModifiedAt": "2023-11-06T03:34:23.8465241Z"
+  }
+}
